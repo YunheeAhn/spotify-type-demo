@@ -1,7 +1,8 @@
+import React, { Suspense } from "react";
 import { Route, Routes } from "react-router";
+
 import "./App.css";
-import AppLayout from "./layout/AppLayout";
-import HomePage from "./pages/HomePage/HomePage";
+import LoadingSpinner from "./common/LoadingSpinner";
 
 // 리액트-타입스크립트 스포티파이 페이지 구성목록
 // 0. 사이드바(플레이리스트, 메뉴)
@@ -11,17 +12,29 @@ import HomePage from "./pages/HomePage/HomePage";
 // 4. 플레이리스트 디테일 페이지(사이드바 플레이리스트 클릭시 이동) '/playlist/:id' <PlaylistDetailPage />
 // 5. (모바일) 플레이리스트 보여주는 페이지 '/playlist' <LibraryPage />
 
+// 코드 스플리팅을 위한 lazy 로딩
+// 장점 : 초기 로딩 속도 향상, 필요한 컴포넌트만 로드
+// 단점 : 첫 로딩 시 딜레이 발생 가능성, 복잡성 증가 -> Suspense 사용 필요
+const AppLayout = React.lazy(() => import("./layout/AppLayout"));
+const HomePage = React.lazy(() => import("./pages/HomePage/HomePage"));
+const SearchPage = React.lazy(() => import("./pages/SearchPage/SearchPage"));
+const SearchResultPage = React.lazy(() => import("./pages/SearchPage/SearchResultPage"));
+const PlaylistDetailPage = React.lazy(() => import("./pages/PlayListsPage/PlaylistDetailPage"));
+const LibraryPage = React.lazy(() => import("./pages/PlayListsPage/LibraryPage"));
+
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<AppLayout />}>
-        <Route index element={<HomePage />} />
-        <Route path="search" element={<div>검색 페이지</div>} />
-        <Route path="search/:keyword" element={<div>검색 결과 페이지</div>} />
-        <Route path="playlist/:id" element={<div>플레이리스트 디테일 페이지</div>} />
-        {/* <Route path="playlist" element={<div>모바일 플레이리스트 페이지</div>} /> */}
-      </Route>
-    </Routes>
+    <Suspense fallback={<LoadingSpinner />}>
+      <Routes>
+        <Route path="/" element={<AppLayout />}>
+          <Route index element={<HomePage />} />
+          <Route path="search" element={<SearchPage />} />
+          <Route path="search/:keyword" element={<SearchResultPage />} />
+          <Route path="playlist/:id" element={<PlaylistDetailPage />} />
+          <Route path="playlist" element={<LibraryPage />} />
+        </Route>
+      </Routes>
+    </Suspense>
   );
 }
 
