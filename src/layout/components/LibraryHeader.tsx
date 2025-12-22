@@ -26,7 +26,7 @@ const LibraryHeader = () => {
 const Head = styled("div")({
   display: "flex",
   alignItems: "center",
-  padding: "8px",
+  paddingBottom: "8px",
 });
 
 const HeadBox = styled(Box)({
