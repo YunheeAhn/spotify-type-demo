@@ -1,11 +1,16 @@
 import React from "react";
+
 import { NavLink, Outlet } from "react-router";
+
+import LibraryHeader from "./components/LibraryHeader";
+import Library from "./components/Library";
+import Navbar from "./components/Navbar";
+
 import { styled } from "@mui/material/styles";
 import { Box, Typography } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import LibraryHeader from "./components/LibraryHeader";
-import Library from "./components/Library";
+
 const AppLayout = () => {
   return (
     <Layout>
@@ -36,6 +41,7 @@ const AppLayout = () => {
 
       {/* Main Content */}
       <MainContent>
+        <Navbar />
         <Outlet />
       </MainContent>
     </Layout>
