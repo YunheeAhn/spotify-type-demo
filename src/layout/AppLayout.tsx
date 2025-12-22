@@ -71,7 +71,7 @@ const ContentsBox = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
   color: theme.palette.text.primary,
   width: "100%",
-  padding: "8px",
+  padding: "20px",
   marginBottom: "8px",
   marginRight: "8px",
 }));
@@ -91,13 +91,36 @@ const NavItem = styled(NavLink)(({ theme }) => ({
   gap: "20px",
   color: theme.palette.text.secondary,
   transition: "all .3s ease",
+
+  position: "relative",
+
+  "&:before": {
+    content: '""',
+    display: "inline-block",
+    width: "0px",
+    height: "2px",
+    background: theme.palette.primary.main,
+
+    position: "absolute",
+    bottom: "-5px",
+    left: "0",
+
+    transition: "all .3s ease",
+  },
+
+  "&:hover::before": {
+    width: "100%",
+  },
+
   "&:hover": {
     color: theme.palette.text.primary,
   },
+
   "&.active": {
     color: theme.palette.text.primary,
     fontWeight: "bold",
   },
+
   "& + &": {
     marginTop: "10px",
   },
@@ -108,6 +131,9 @@ const MainContent = styled("div")(({ theme }) => ({
   width: "calc(100% - 331px)",
   height: "100%",
   overflowY: "auto",
+  padding: "8px",
+  marginBottom: "8px",
+  marginRight: "8px",
   [theme.breakpoints.down("sm")]: {
     width: "100%",
   },
