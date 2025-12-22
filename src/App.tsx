@@ -2,7 +2,7 @@ import React, { Suspense } from "react";
 import { Route, Routes } from "react-router";
 
 import "./App.css";
-import LoadingSpinner from "./common/LoadingSpinner";
+import LoadingSpinner from "./common/components/LoadingSpinner";
 
 // 리액트-타입스크립트 스포티파이 페이지 구성목록
 // 0. 사이드바(플레이리스트, 메뉴)
