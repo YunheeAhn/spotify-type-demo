@@ -1,0 +1,14 @@
+import { styled } from "@mui/material";
+
+// 각페이지를 감싸는 컨테이너
+export const Container = styled("div")({
+  padding: "20px",
+  boxSizing: "border-box",
+});
+
+// 페이지 안 섹션 구분용 컴포넌트
+export const Section = styled("div")({
+  "& + &": {
+    marginTop: "20px",
+  },
+});
