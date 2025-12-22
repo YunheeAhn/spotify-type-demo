@@ -32,10 +32,19 @@ const theme = createTheme({
       fontSize: "1rem",
     },
     body1: {
-      fontSize: "14px",
+      fontSize: "1rem",
     },
     subtitle1: {
-      fontSize: "0.6875rem",
+      fontSize: "0.889rem",
+    },
+  },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 680,
+      md: 980,
+      lg: 1200,
+      xl: 1536,
     },
   },
   components: {
