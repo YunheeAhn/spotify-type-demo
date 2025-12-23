@@ -1,4 +1,4 @@
-import { ExternalURLs } from "./commonType";
+import type { ExternalURLs } from "./commonType";
 
 // 아티스트 타입
 export interface Artists {

@@ -1,5 +1,5 @@
-import { Artists } from "./artist";
-import { ExternalURLs, Image, Restrictions } from "./commonType";
+import type { Artists } from "./artist";
+import type { ExternalURLs, Image, Restrictions } from "./commonType";
 
 // 새로운 발매 앨범 응답 타입
 export interface getNewReleasesResponse {
