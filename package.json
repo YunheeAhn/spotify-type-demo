@@ -6,8 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "typecheck": "tsc --noEmit",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "clean": "rimraf dist src/**/*.d.ts *.tsbuildinfo"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

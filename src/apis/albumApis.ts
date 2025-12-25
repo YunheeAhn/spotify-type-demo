@@ -8,7 +8,7 @@ export const getNewReleases = async (
 ): Promise<getNewReleasesResponse> => {
   try {
     // Spotify API의 새로운 발매 앨범 엔드포인트에 요청
-    const response = await axios.get(`${SPOTIFY_BASE_URL}/browse/new-releases`, {
+    const response = await axios.get(`${SPOTIFY_BASE_URL}/browse/new-releases?limit=6`, {
       headers: {
         Authorization: `Bearer ${getClientCredentialToken}`,
       },
