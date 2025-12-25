@@ -8,8 +8,6 @@ const HomePage = () => {
   return (
     <Container>
       <NewReleased />
-      <NewReleased />
-      <NewReleased />
     </Container>
   );
 };
