@@ -3,9 +3,7 @@ import { clientId, clientSecret } from "../configs/authConfig";
 import type { ClientCredentialResponse } from "../models/auth";
 
 // Base64 인코딩 함수
-const encodeBase64 = (data: string) => {
-  return Buffer.from(data).toString("base64");
-};
+const encodedCredentials = btoa(`${clientId}:${clientSecret}`);
 
 // 클라이언트 자격 증명 토큰을 가져오는 함수
 export const getClientCredentialToken = async (): Promise<ClientCredentialResponse> => {
@@ -16,7 +14,7 @@ export const getClientCredentialToken = async (): Promise<ClientCredentialRespon
 
     const response = await axios.post("https://accounts.spotify.com/api/token", body, {
       headers: {
-        Authorization: `Basic ${encodeBase64(`${clientId}:${clientSecret}`)}`,
+        Authorization: `Basic ${encodedCredentials}`,
         "Content-Type": "application/x-www-form-urlencoded",
       },
     });
