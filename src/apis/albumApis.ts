@@ -1,13 +1,14 @@
 import axios from "axios";
 import { SPOTIFY_BASE_URL } from "../configs/commonConfig";
-import { getNewReleasesResponse } from "../models/album";
+import type { getNewReleasesResponse } from "../models/album";
 
 // 새로운 발매 앨범을 가져오는 함수
 export const getNewReleases = async (
   getClientCredentialToken: string
 ): Promise<getNewReleasesResponse> => {
   try {
-    const response = await axios.get(`${SPOTIFY_BASE_URL}/browse/new-releases?limit=6`, {
+    // Spotify API의 새로운 발매 앨범 엔드포인트에 요청
+    const response = await axios.get(`${SPOTIFY_BASE_URL}/browse/new-releases`, {
       headers: {
         Authorization: `Bearer ${getClientCredentialToken}`,
       },
