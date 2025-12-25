@@ -52,13 +52,17 @@ export default AppLayout;
 
 // **스타일 컴포넌트**
 // 레이아웃
-const Layout = styled("div")({
+const Layout = styled("div")(({ theme }) => ({
   display: "flex",
   height: "100vh",
   overflow: "hidden",
   padding: "8px",
   boxSizing: "border-box",
-});
+
+  [theme.breakpoints.down("sm")]: {
+    padding: 0,
+  },
+}));
 
 // 사이드바
 const Sidebar = styled("div")(({ theme }) => ({
@@ -66,8 +70,13 @@ const Sidebar = styled("div")(({ theme }) => ({
   height: "100%",
   display: "flex",
   flexDirection: "column",
+
   [theme.breakpoints.down("sm")]: {
     display: "none",
+  },
+
+  [theme.breakpoints.down("md")]: {
+    width: "220px",
   },
 }));
 
@@ -140,7 +149,16 @@ const MainContent = styled("div")(({ theme }) => ({
   padding: "8px",
   marginBottom: "8px",
   marginRight: "8px",
+
+  [theme.breakpoints.down("md")]: {
+    width: "calc(100% - 260px)",
+  },
+
   [theme.breakpoints.down("sm")]: {
     width: "100%",
+    marginRight: 0,
+
+    // 스크롤 원래대로
+    overflowY: "",
   },
 }));
