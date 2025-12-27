@@ -1,9 +1,9 @@
 import axios from "axios";
-import { clientId, clientSecret } from "../configs/authConfig";
+import { client_Id, client_Secret } from "../configs/authConfig";
 import type { ClientCredentialResponse } from "../models/auth";
 
 // Base64 인코딩 함수
-const encodedCredentials = btoa(`${clientId}:${clientSecret}`);
+const encodedCredentials = btoa(`${client_Id}:${client_Secret}`);
 
 // 클라이언트 자격 증명 토큰을 가져오는 함수
 export const getClientCredentialToken = async (): Promise<ClientCredentialResponse> => {
