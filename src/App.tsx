@@ -1,8 +1,9 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect } from "react";
 import { Route, Routes } from "react-router";
 
 import "./App.css";
 import LoadingSpinner from "./common/components/LoadingSpinner";
+import useExchangeToken from "./hooks/useExchangeToken";
 
 // 리액트-타입스크립트 스포티파이 페이지 구성목록
 // 0. 사이드바(플레이리스트, 메뉴)
@@ -23,6 +24,18 @@ const PlaylistDetailPage = React.lazy(() => import("./pages/PlayListsPage/Playli
 const LibraryPage = React.lazy(() => import("./pages/PlayListsPage/LibraryPage"));
 
 function App() {
+  const urlParams = new URLSearchParams(window.location.search);
+
+  let code = urlParams.get("code");
+  const codeVerifier = localStorage.getItem("code_verifier");
+
+  const { mutate: exchangeToken } = useExchangeToken();
+  useEffect(() => {
+    if (code && codeVerifier) {
+      exchangeToken({ code, codeVerifier });
+    }
+  }, [code, codeVerifier, exchangeToken]);
+
   return (
     <Suspense fallback={<LoadingSpinner />}>
       <Routes>
