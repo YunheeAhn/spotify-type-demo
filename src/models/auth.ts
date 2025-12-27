@@ -16,3 +16,12 @@ export interface AuthURLParams {
   code_challenge_method: "S256";
   code_challenge: string;
 }
+
+// useExchangeToken.ts에서 사용되는 토큰 교환 응답 타입
+export interface TokenExchangeResponse {
+  access_token: string;
+  token_type: string;
+  scope: string;
+  expires_in: number; // int
+  refresh_token: string;
+}
