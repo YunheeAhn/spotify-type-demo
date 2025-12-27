@@ -24,11 +24,11 @@ const PlaylistDetailPage = React.lazy(() => import("./pages/PlayListsPage/Playli
 const LibraryPage = React.lazy(() => import("./pages/PlayListsPage/LibraryPage"));
 
 function App() {
+  // 유저 로그인 연결
   const urlParams = new URLSearchParams(window.location.search);
-
   let code = urlParams.get("code");
   const codeVerifier = localStorage.getItem("code_verifier");
-
+  // 토큰 교환 훅
   const { mutate: exchangeToken } = useExchangeToken();
   useEffect(() => {
     if (code && codeVerifier) {
