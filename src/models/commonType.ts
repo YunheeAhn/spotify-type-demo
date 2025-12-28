@@ -16,3 +16,15 @@ export interface Image {
 export interface Restrictions {
   reason: string;
 }
+
+// 팔로워 타입
+export interface Followers {
+  href?: string | null;
+  total?: number;
+}
+
+// explicit_content 타입
+export interface Explicit {
+  filter_enabled?: boolean;
+  filter_locked?: boolean;
+}
