@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect } from "react";
+import React, { Suspense, useEffect, useRef } from "react";
 import { Route, Routes } from "react-router";
 
 import "./App.css";
@@ -24,15 +24,26 @@ const PlaylistDetailPage = React.lazy(() => import("./pages/PlayListsPage/Playli
 const LibraryPage = React.lazy(() => import("./pages/PlayListsPage/LibraryPage"));
 
 function App() {
+  const ranRef = useRef(false);
+
   // 유저 로그인 연결
   const urlParams = new URLSearchParams(window.location.search);
   let code = urlParams.get("code");
   const codeVerifier = localStorage.getItem("code_verifier");
   // 토큰 교환 훅
   const { mutate: exchangeToken } = useExchangeToken();
+
   useEffect(() => {
     if (code && codeVerifier) {
+      // ✅ StrictMode 2회 호출 방지
+      ranRef.current = true;
+
       exchangeToken({ code, codeVerifier });
+
+      // ✅ URL에서 code 제거(새로고침/재렌더 때 재시도 방지)
+      const url = new URL(window.location.href);
+      url.searchParams.delete("code");
+      window.history.replaceState({}, "", url.toString());
     }
   }, [code, codeVerifier, exchangeToken]);
 
@@ -45,6 +56,9 @@ function App() {
           <Route path="search/:keyword" element={<SearchResultPage />} />
           <Route path="playlist/:id" element={<PlaylistDetailPage />} />
           <Route path="playlist" element={<LibraryPage />} />
+
+          {/* 콜백 경로 */}
+          <Route path="callback" element={<HomePage />} />
         </Route>
       </Routes>
     </Suspense>
