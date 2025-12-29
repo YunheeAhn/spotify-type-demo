@@ -1,18 +1,10 @@
+import type { ApiResponse } from "./apiResponse";
 import type { Artists } from "./artist";
 import type { ExternalURLs, Image, Restrictions } from "./commonType";
 
 // 새로운 발매 앨범 응답 타입
 export interface getNewReleasesResponse {
-  albums: {
-    href: string;
-    limit: number;
-    next: string;
-    offset: number;
-    previous: string | null;
-    total: number;
-
-    items: SimplifiedAlbum[];
-  };
+  albums: ApiResponse<SimplifiedAlbum>; // 제네릭 사용
 }
 
 // 앨범 타입
