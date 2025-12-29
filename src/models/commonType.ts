@@ -28,3 +28,13 @@ export interface Explicit {
   filter_enabled?: boolean;
   filter_locked?: boolean;
 }
+
+// owner 타입
+export interface Owner {
+  external_urls?: ExternalURLs;
+  href?: string;
+  id?: string;
+  type?: string;
+  url?: string;
+  display_name?: string | null;
+}
