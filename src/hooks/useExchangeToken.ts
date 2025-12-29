@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { exchangeToken } from "../apis/authApi";
-import { TokenExchangeResponse } from "../models/auth";
+import type { TokenExchangeResponse } from "../models/auth";
 
 // useExchangeToken 훅
 const useExchangeToken = () => {

@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { GetPlayListRequest } from "../models/playList";
+import type { GetPlayListRequest } from "../models/playList";
 import { getPlayList } from "../apis/playListApi";
 
 // 선택한 플레이리스트 가져오는 훅
