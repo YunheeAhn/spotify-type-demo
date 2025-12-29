@@ -25,8 +25,8 @@ const PlayListItem = ({
       </PlaylistAvatar>
 
       {/* 텍스트 섹션 */}
-      <ListItemText
-        primary={<PlaylistName>{name}</PlaylistName>}
+      <PlaylistName
+        primary={<Typography>{name}</Typography>}
         secondary={
           <Typography variant="body1" color="text.secondary">
             {artistName}
@@ -81,7 +81,7 @@ const PlaylistAvatar = styled(ListItemAvatar)({
   },
 });
 
-const PlaylistName = styled(Typography)(({ theme }) => ({
+const PlaylistName = styled(ListItemText)(({ theme }) => ({
   fontWeight: "bold",
   color: theme.palette.primary.main,
   width: "calc(100% - 60px)",
