@@ -151,7 +151,7 @@ const MainContent = styled("div")(({ theme }) => ({
   marginRight: "8px",
 
   [theme.breakpoints.down("md")]: {
-    width: "calc(100% - 260px)",
+    width: "calc(100% - 220px)",
   },
 
   [theme.breakpoints.down("sm")]: {
