@@ -62,6 +62,7 @@ const PlayListItemContainer = styled(ListItemButton)(({ theme, selected }) => ({
 }));
 
 const PlaylistAvatar = styled(ListItemAvatar)({
+  minWidth: "auto",
   width: "50px",
   height: "50px",
   borderRadius: "100%",
@@ -77,7 +78,7 @@ const PlaylistAvatar = styled(ListItemAvatar)({
   "& img ": {
     width: "100%",
     height: "100%",
-    objetFit: "cover",
+    objectFit: "cover",
   },
 });
 
