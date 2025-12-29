@@ -1,6 +1,6 @@
 import type { ApiResponse } from "./apiResponse";
 import { Artists } from "./artist";
-import { ExternalURLs, Followers, Image, Owner } from "./commonType";
+import { ExternalURLs, Followers, Image, Owner, Restrictions } from "./commonType";
 
 // 현재 사용자 플레이 리스트 요청 타입
 export interface GetCurrentUserPlayListRequest {
@@ -49,7 +49,7 @@ export interface Playlist extends BasePlayList {
   followers: Followers;
 }
 
-// 선택한 플레이리스트 트랙 타입
+// 선택한 플레이리스트-트랙 타입
 export interface PlaylistTrack {
   added_at?: string | null;
   added_by?: {
@@ -64,7 +64,7 @@ export interface PlaylistTrack {
   track: Track | Episode; // 유니온타입
 }
 
-// 트랙의 트랙 타입
+// 플레이리스트-트랙의 트랙 타입
 export interface Track {
   album?: {
     album_type: string;
@@ -73,6 +73,14 @@ export interface Track {
     external_url: ExternalURLs;
     href: string;
     id: string;
+    images: Image[];
+    name: string;
+    release_date: string;
+    release_date_precision: string;
+    restrictions: Restrictions;
+    type: "album";
+    uri: string;
+    artists: Artists[];
   };
   artists?: Artists[];
   available_markets?: string[];
@@ -88,19 +96,18 @@ export interface Track {
   href?: string;
   id?: string;
   is_playable?: boolean;
-  restrictions?: {
-    reason?: string;
-  };
+  linked_from?: Track;
+  restrictions?: Restrictions;
   name?: string;
   popularity?: number;
   preview_url: string | null;
   track_number?: number;
-  type?: string;
+  type?: "track"; // 필수 값이 아님
   uri?: string;
   is_local?: boolean;
 }
 
-// 에피소드 타입
+// 플레이리스트-트랙의 에피소드 타입
 export interface Episode {
   audio_preview_url: string | null;
   description: string;
@@ -110,7 +117,7 @@ export interface Episode {
   external_urls: ExternalURLs;
   href: string;
   id: string;
-  images: Image;
+  images: Image[];
   is_externally_hosted: boolean;
   is_playable: boolean;
   language?: string;
@@ -122,11 +129,9 @@ export interface Episode {
     fully_played?: boolean;
     resume_position_ms?: number;
   };
-  type: string;
+  type: "episode"; // 필수값
   uri: string;
-  restrictions?: {
-    reason?: string;
-  };
+  restrictions?: Restrictions;
   show: Show;
 }
 
@@ -143,13 +148,22 @@ export interface Show {
   external_urls: ExternalURLs;
   href: string;
   id: string;
-  images: Image;
+  images: Image[];
   is_externally_hosted: boolean;
   languages: string[];
   media_type: string;
   name: string;
   publisher: string;
-  type: string;
+  type: "show"; // 필수 값
   uri: string;
   total_episodes: number;
 }
+
+// 선택한 플레이리스트의 아이템 요청 타입
+export interface GetPlayListItemsRequest extends GetPlayListRequest {
+  offset?: number;
+  limit?: number;
+}
+
+// 선택한 플레이리스트의 아이템 응답 타입
+export type GetPlayListItemsResponse = ApiResponse<PlaylistTrack>;
