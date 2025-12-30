@@ -20,7 +20,6 @@ import { PAGE_LIMIT } from "../../configs/commonConfig";
 import { useInView } from "react-intersection-observer";
 import ErrorMessage from "../../common/components/ErrorMessage";
 import MobilePlayListItem from "./component/MobilePlayListItem";
-import LoginButton from "../../common/components/LoginButton";
 import SearchToFillEmptyPlaylist from "./component/SearchToFillEmptyPlaylist";
 
 // 선택한 플레이리스트 디테일 페이지(사이드바 플레이리스트 클릭시 이동)
