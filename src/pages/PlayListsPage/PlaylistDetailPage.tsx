@@ -20,15 +20,17 @@ import { PAGE_LIMIT } from "../../configs/commonConfig";
 import { useInView } from "react-intersection-observer";
 import ErrorMessage from "../../common/components/ErrorMessage";
 import MobilePlayListItem from "./component/MobilePlayListItem";
+import LoginButton from "../../common/components/LoginButton";
 
 // 선택한 플레이리스트 디테일 페이지(사이드바 플레이리스트 클릭시 이동)
 const PlaylistDetailPage = () => {
   // url 에서 선택한 플레이리스트의 id값 읽어오기
   const { id } = useParams<{ id: string }>();
   const playlistId = id ?? "";
+  const accessToken = localStorage.getItem("access_token");
 
   // 플레이리스트의 id값으로 선택한 플레이리스트 가 져오기
-  const { data: playList } = useGetPlayList({ playlist_id: playlistId });
+  const { data: playList, error: playListError } = useGetPlayList({ playlist_id: playlistId });
 
   // 플레이리스트의 아이템 가져오기, 무한스크롤
   const {
@@ -55,6 +57,16 @@ const PlaylistDetailPage = () => {
   // url 에서 선택한 플레이리스트의 id값 없으면 홈으로
   if (!id) return <Navigate to="/" />;
 
+  // 로그아웃 상태면 로그인 유도
+  if (!accessToken) {
+    return (
+      <StyledTableContainer>
+        <ErrorMessage message="다시 로그인 하세요" />
+        {/* <LoginButton /> */}
+      </StyledTableContainer>
+    );
+  }
+
   // 로딩 처리
   if (isPlayListItemsLoading) {
     return (
@@ -67,10 +79,23 @@ const PlaylistDetailPage = () => {
   }
 
   // 에러 처리
-  if (playListItemsError) {
+  const getStatus = (err: any) => err?.response?.status ?? err?.status ?? err?.error?.status;
+  const isUnauthorized = (err: any) => getStatus(err) === 401;
+
+  const combinedError = playListError || playListItemsError;
+
+  if (combinedError) {
+    if (isUnauthorized(combinedError)) {
+      return (
+        <StyledTableContainer>
+          <ErrorMessage message="다시 로그인 하세요" />
+        </StyledTableContainer>
+      );
+    }
+
     return (
       <StyledTableContainer>
-        <ErrorMessage message={playListItemsError.message} />
+        <ErrorMessage message="Failed to load" />
       </StyledTableContainer>
     );
   }
