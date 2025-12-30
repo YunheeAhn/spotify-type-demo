@@ -167,3 +167,12 @@ export interface GetPlayListItemsRequest extends GetPlayListRequest {
 
 // 선택한 플레이리스트의 아이템 응답 타입
 export type GetPlayListItemsResponse = ApiResponse<PlaylistTrack>;
+
+// 플레이리스트 생성 요청 타입
+export interface CreatePlayListRequest {
+  name: string;
+  // public?: boolean; // public은 프로그래밍에서 사용하는 이름이라 사용 할 수 없음
+  playlistpublic?: boolean;
+  collaborative?: boolean;
+  description?: string;
+}
