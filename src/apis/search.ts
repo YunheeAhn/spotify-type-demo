@@ -26,3 +26,25 @@
 //     throw new Error("Fail to Search by Keyword");
 //   }
 // };
+
+import axios from "axios";
+import { SPOTIFY_BASE_URL } from "../configs/commonConfig";
+
+// TODO: 검색 params 구조 확정 필요
+export const SearchItemsByKeyword = async (token?: string, params?: any) => {
+  try {
+    const response = await axios.get(`${SPOTIFY_BASE_URL}/search`, {
+      headers: token
+        ? {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          }
+        : undefined,
+      params, // 임시
+    });
+
+    return response.data;
+  } catch (error) {
+    throw new Error("Fail to Search by Keyword");
+  }
+};
