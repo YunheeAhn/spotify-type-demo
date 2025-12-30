@@ -1,5 +1,6 @@
 import api from "../utils/api";
 import type {
+  CreatePlayListRequest,
   GetCurrentUserPlayListRequest,
   GetCurrentUserPlayListResponse,
   GetPlayListItemsRequest,
@@ -50,5 +51,25 @@ export const GetPlayListItems = async (
     return response.data;
   } catch (error) {
     throw new Error("Fail to fetch playlist items");
+  }
+};
+
+// 플레이리스트 생성하는 api
+export const CreatePlayList = async (
+  user_id: string,
+  params: CreatePlayListRequest
+): Promise<Playlist> => {
+  try {
+    const { name, playlistpublic, collaborative, description } = params;
+    const response = await api.post(`/users/${user_id}/playlists`, {
+      name,
+      public: playlistpublic,
+      collaborative,
+      description,
+    });
+
+    return response.data;
+  } catch (error) {
+    throw new Error("Fail to create playlist");
   }
 };
