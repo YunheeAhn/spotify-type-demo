@@ -17,7 +17,7 @@ const LibraryHeader = () => {
     if (allowedClick) {
       // 로그인 상태
       // allowed click
-      createPlayList({ name: "나의 플레이 리스트" });
+      createPlayList({ name: "New PlayList" });
     } else {
       // 비로그인 상태
       // not allowed click
