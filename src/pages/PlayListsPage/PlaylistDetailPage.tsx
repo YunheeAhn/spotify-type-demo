@@ -21,6 +21,7 @@ import { useInView } from "react-intersection-observer";
 import ErrorMessage from "../../common/components/ErrorMessage";
 import MobilePlayListItem from "./component/MobilePlayListItem";
 import LoginButton from "../../common/components/LoginButton";
+import SearchToFillEmptyPlaylist from "./component/SearchToFillEmptyPlaylist";
 
 // 선택한 플레이리스트 디테일 페이지(사이드바 플레이리스트 클릭시 이동)
 const PlaylistDetailPage = () => {
@@ -62,7 +63,6 @@ const PlaylistDetailPage = () => {
     return (
       <StyledTableContainer>
         <ErrorMessage message="다시 로그인 하세요" />
-        {/* <LoginButton /> */}
       </StyledTableContainer>
     );
   }
@@ -80,13 +80,15 @@ const PlaylistDetailPage = () => {
 
   // 에러 처리
   const getStatus = (err: any) => err?.response?.status ?? err?.status ?? err?.error?.status;
-  const isUnauthorized = (err: any) => getStatus(err) === 401;
+  const isUnauthorized = (err: any) => getStatus(err) === 401; // 401 에러 상태
 
+  // 플레이리스트 에러, 플레이리스트 아이템 에러 결합
   const combinedError = playListError || playListItemsError;
 
   if (combinedError) {
     if (isUnauthorized(combinedError)) {
       return (
+        // 401에러 상태
         <StyledTableContainer>
           <ErrorMessage message="다시 로그인 하세요" />
         </StyledTableContainer>
@@ -94,6 +96,7 @@ const PlaylistDetailPage = () => {
     }
 
     return (
+      // 그 외 에러
       <StyledTableContainer>
         <ErrorMessage message="Failed to load" />
       </StyledTableContainer>
@@ -138,7 +141,9 @@ const PlaylistDetailPage = () => {
 
       {/* 플레이리스트 아이템 영역 */}
       {playList?.tracks?.total === 0 ? (
-        <Typography>검색하기</Typography>
+        // 만약 플레이리스트에 하위 아이템이 없다면??
+        // <Typography>검색하기</Typography>
+        <SearchToFillEmptyPlaylist />
       ) : (
         <div>
           {isDesktop ? (
