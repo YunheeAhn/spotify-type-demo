@@ -135,6 +135,9 @@ export interface Episode {
   show: Show;
 }
 
+// 플레이리스트-트랙의 에피소드 타입에서 show 제외
+export type SimplifiedEpisode = Omit<Episode, "show">;
+
 // show 타입
 export interface Show {
   available_markets: string[];
@@ -157,6 +160,36 @@ export interface Show {
   type: "show"; // 필수 값
   uri: string;
   total_episodes: number;
+}
+
+export interface SimplifiedAudiBook {
+  authors: {
+    name?: string;
+  };
+  available_markets: string[];
+  copyrights: {
+    text?: string;
+    type?: string;
+  };
+  description: string;
+  html_description: string;
+  edition: string;
+  explicit: boolean;
+  external_urls: ExternalURLs;
+  href: string;
+  id: string;
+  images: Image[];
+  is_externally_hosted: boolean;
+  languages: string[];
+  media_type: string;
+  name: string;
+  narrators: {
+    name?: string;
+  };
+  publisher: string;
+  type: "audiobook"; // 필수 값
+  uri: string;
+  total_chapters: number;
 }
 
 // 선택한 플레이리스트의 아이템 요청 타입
