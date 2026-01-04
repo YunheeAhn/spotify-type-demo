@@ -1,16 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
 import { Track } from "../../../models/playList";
-import {
-  Box,
-  Button,
-  styled,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableRow,
-  Typography,
-} from "@mui/material";
+import { Box, Button, styled, TableBody, TableCell, TableRow, Typography } from "@mui/material";
 import { useInView } from "react-intersection-observer";
 import LoadingSpinner from "../../../common/components/LoadingSpinner";
 
@@ -49,7 +40,9 @@ const SearchResultList = ({
                   <AlbumImage src={track.album?.images?.[0]?.url} width="40px" />
                 </Box>
                 <Box>
-                  <Typography fontWeight={700}>{track.name}</Typography>
+                  <Typography className="title" fontWeight={700}>
+                    {track.name}
+                  </Typography>
                   <Typography color="text.secondary">
                     {track.artists?.[0]?.name ?? "Unknown Artist"}
                   </Typography>
@@ -77,17 +70,26 @@ const SearchResultList = ({
   );
 };
 
-const StyledTableContainer = styled(TableContainer)(({ theme }) => ({
+const StyledTableContainer = styled("table")(({ theme }) => ({
   background: theme.palette.background.paper,
   color: theme.palette.common.white,
+  position: "relative",
+
   width: "100%",
 }));
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   width: "100%",
   cursor: "pointer",
-  "&:hover": { backgroundColor: theme.palette.action.hover },
+  transition: "all .3s ease",
   "& .MuiTableCell-root": { borderBottom: "none" },
+
+  "&:hover .title": {
+    color: theme.palette.primary.main,
+  },
+  "&:hover ": {
+    backgroundColor: theme.palette.action.hover,
+  },
 }));
 
 const AlbumImage = styled("img")({
