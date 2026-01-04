@@ -246,8 +246,8 @@ const ImageSection = styled("div")(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
     display: "flex",
     justifyContent: "center",
-    width: "120px",
-    height: "120px",
+    width: "160px",
+    height: "160px",
     marginRight: 0,
   },
 
@@ -331,7 +331,6 @@ const DefaultImage = styled("div")(({ theme }) => ({
   marginRight: "20px",
   overflow: "hidden",
   position: "relative",
-  border: "2px solid silver",
   backgroundColor: theme.palette.action.active,
 
   [theme.breakpoints.down("md")]: {
@@ -342,36 +341,8 @@ const DefaultImage = styled("div")(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
     display: "flex",
     justifyContent: "center",
-    width: "120px",
-    height: "120px",
+    width: "160px",
+    height: "160px",
     marginRight: 0,
-  },
-
-  "&::before": {
-    position: "absolute",
-    display: "block",
-    content: '""',
-    width: "16%",
-    height: "16%",
-    borderRadius: "100%",
-    backgroundColor: theme.palette.background.paper,
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%,-50%)",
-    zIndex: "1",
-  },
-
-  "&::after": {
-    position: "absolute",
-    display: "block",
-    content: '""',
-    width: "20%",
-    height: "20%",
-    borderRadius: "100%",
-    backgroundColor: theme.palette.secondary.main,
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%,-50%)",
-    opacity: "0.4",
   },
 }));
