@@ -1,29 +1,37 @@
-// import { useInfiniteQuery } from "@tanstack/react-query"
-
-// // 진행 중
-
-// // 키워드 검색 결과 가져오는 훅
-// const useSearchItemsByKeyword = (params) => {
-//     retrun useInfiniteQuery({
-//         queryKey:["search", params],
-//         queryFn : ({pageParam = 0}) => {
-//             retrun SearchItemsByKeyword(params)
-//         },
-//         initialPageParam : 0,
-//         getNextPageParam:(lastPage)=>{}
-//     })
-// }
-
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { SearchItemsByKeyword } from "../apis/search";
+import { SearchItemsByKeyword } from "../apis/searchApi";
+import { SearchRequestParams } from "../models/search";
+import useClientCredentialToken from "./useClientCredentialToken";
 
-// TODO: infinite scroll 로직 완성 필요
-const useSearchItemsByKeyword = (params: any) => {
+// 키워드 검색 결과 가져오는 훅
+const useSearchItemsByKeyword = (params: SearchRequestParams) => {
+  // token은 어디서 가져오지?
+  const clientCredentialToken = useClientCredentialToken();
+
   return useInfiniteQuery({
     queryKey: ["search", params],
-    queryFn: ({ pageParam = 0 }) => SearchItemsByKeyword(undefined, params),
+    queryFn: ({ pageParam = 0 }) => {
+      if (!clientCredentialToken) throw new Error("No Client Credential Token");
+
+      return SearchItemsByKeyword(clientCredentialToken, { ...params, offset: pageParam });
+    },
+    enabled: !!params.q,
     initialPageParam: 0,
-    getNextPageParam: () => undefined,
+    getNextPageParam: (lastPage) => {
+      const nextPageUrl =
+        lastPage.tracks?.next ||
+        lastPage.artists?.next ||
+        lastPage.albums?.next ||
+        lastPage.playlists?.next ||
+        lastPage.shows?.next ||
+        lastPage.episodes?.next ||
+        lastPage.audiobooks?.next;
+
+      if (nextPageUrl) {
+        const nextOffset = new URL(nextPageUrl).searchParams.get("offset");
+        return nextOffset ? parseInt(nextOffset) : undefined;
+      }
+    },
   });
 };
 
