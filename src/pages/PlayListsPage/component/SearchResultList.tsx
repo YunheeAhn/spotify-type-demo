@@ -55,8 +55,10 @@ const SearchResultList = ({
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   const handleAdd = (track: Track) => {
+    const id = track.id ?? "";
     if (!track.uri) return;
-    setAddingTrackId(track.id);
+    setAddingTrackId(id);
+
     mutation.mutate([track.uri], {
       onSuccess: () => {
         onAdded?.();
