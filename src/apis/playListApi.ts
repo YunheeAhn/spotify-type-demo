@@ -1,5 +1,7 @@
 import api from "../utils/api";
 import type {
+  AddTracksToPlaylistRequest,
+  AddTracksToPlaylistResponse,
   CreatePlayListRequest,
   GetCurrentUserPlayListRequest,
   GetCurrentUserPlayListResponse,
@@ -71,5 +73,26 @@ export const CreatePlayList = async (
     return response.data;
   } catch (error) {
     throw new Error("Fail to create playlist");
+  }
+};
+
+// 플레이리스트 트랙에 추가하는 api
+export const addTracksToPlaylist = async (
+  playlist_id: string,
+  uris: string[],
+  position?: number
+): Promise<AddTracksToPlaylistResponse> => {
+  try {
+    // 요청 타입 명시
+    const body: AddTracksToPlaylistRequest = position !== undefined ? { uris, position } : { uris };
+    // axios 제네릭에 응답 타입을 넣어 response.data의 타입을 보장
+    const response = await api.post<AddTracksToPlaylistResponse>(
+      `/playlists/${playlist_id}/tracks`,
+      body
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Failed to add tracks to playlist", error);
+    throw error;
   }
 };

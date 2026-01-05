@@ -7,8 +7,14 @@ import LoadingSpinner from "../../../common/components/LoadingSpinner";
 import SearchIcon from "@mui/icons-material/Search";
 import ErrorMessage from "../../../common/components/ErrorMessage";
 
+// 빈 플레이리스트 채우기 위한 검색 컴포넌트 props 인터페이스
+interface EmptyPlaylistWithSearchProps {
+  playlistId?: string;
+  onAdded?: () => void;
+}
+
 // 빈 플레이리스트 채우기 위한 검색 컴포넌트
-const SearchToFillEmptyPlaylist = () => {
+const SearchToFillEmptyPlaylist = ({ playlistId, onAdded }: EmptyPlaylistWithSearchProps) => {
   const [keyword, setKeyword] = useState<string>(""); // useState의 제네릭
   const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -60,10 +66,12 @@ const SearchToFillEmptyPlaylist = () => {
         ) : hasResults ? (
           // 검색 결과가 있을 때 결과 리스트 보여주기
           <SearchResultList
+            playlistId={playlistId}
             list={tracks}
             hasNextPage={hasNextPage}
             isFetchingNextPage={isFetchingNextPage}
             fetchNextPage={fetchNextPage}
+            onAdded={onAdded}
           />
         ) : keyword === "" ? null : (
           // 검색어가 비어 있을 때

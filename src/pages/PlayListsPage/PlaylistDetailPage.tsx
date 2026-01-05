@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router";
 import useGetPlayList from "../../hooks/useGetPlayList";
 import {
@@ -29,6 +29,9 @@ const PlaylistDetailPage = () => {
   const playlistId = id ?? "";
   const accessToken = localStorage.getItem("access_token");
 
+  // 플레이리스트 추가 시 페이지 상태 변환
+  const [forceShowItems, setForceShowItems] = useState(false);
+
   // 플레이리스트의 id값으로 선택한 플레이리스트 가 져오기
   const { data: playList, error: playListError } = useGetPlayList({ playlist_id: playlistId });
 
@@ -56,6 +59,8 @@ const PlaylistDetailPage = () => {
 
   // url 에서 선택한 플레이리스트의 id값 없으면 홈으로
   if (!id) return <Navigate to="/" />;
+
+  const isEmpty = (playList?.tracks?.total ?? 0) === 0;
 
   // 로그아웃 상태면 로그인 유도
   if (!accessToken) {
@@ -139,10 +144,8 @@ const PlaylistDetailPage = () => {
       </PlaylistHeader>
 
       {/* 플레이리스트 아이템 영역 */}
-      {playList?.tracks?.total === 0 ? (
-        // 만약 플레이리스트에 하위 아이템이 없다면??
-        // <Typography>검색하기</Typography>
-        <SearchToFillEmptyPlaylist />
+      {isEmpty && !forceShowItems ? (
+        <SearchToFillEmptyPlaylist playlistId={id} onAdded={() => setForceShowItems(true)} />
       ) : (
         <div>
           {isDesktop ? (

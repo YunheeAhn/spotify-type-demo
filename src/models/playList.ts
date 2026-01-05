@@ -209,3 +209,15 @@ export interface CreatePlayListRequest {
   collaborative?: boolean;
   description?: string;
 }
+
+// AddTracks 요청 : 추가할 트랙 URI 목록과 선택적 위치(position)
+// 검색한 플레이리스트 트랙을 플레이리스트에 추가할 때 요청 타입
+export interface AddTracksToPlaylistRequest {
+  uris: string[];
+  position?: number;
+}
+
+// AddTracks 응답
+export interface AddTracksToPlaylistResponse {
+  snapshot_id: string;
+}
