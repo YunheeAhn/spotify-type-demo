@@ -34,6 +34,7 @@ export const SearchItemsByKeyword = async (
 
     return response.data;
   } catch (error) {
+    console.log("Fail to Search by Keyword", error);
     throw new Error("Fail to Search by Keyword");
   }
 };

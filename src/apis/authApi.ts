@@ -21,6 +21,7 @@ export const getClientCredentialToken = async (): Promise<ClientCredentialRespon
 
     return response.data;
   } catch (error) {
+    console.log("Failed to fetch client credential token", error);
     throw new Error("Failed to fetch client credential token");
   }
 };
@@ -49,6 +50,7 @@ export const exchangeToken = async (
     });
     return response.data;
   } catch (error) {
+    console.log("Failed to exchange token", error);
     throw new Error("Failed to exchange token");
   }
 };

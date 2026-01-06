@@ -16,6 +16,7 @@ export const getNewReleases = async (
 
     return response.data;
   } catch (error) {
+    console.log("Failed to fetch new releases", error);
     throw new Error("Failed to fetch new releases");
   }
 };

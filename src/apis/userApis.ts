@@ -8,6 +8,7 @@ export const getCurrentUserProfile = async (): Promise<User> => {
 
     return response.data;
   } catch (error) {
+    console.log("Failed to fetch current user profile", error);
     throw new Error("Failed to fetch current user profile");
   }
 };
