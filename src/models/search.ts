@@ -11,6 +11,7 @@ export enum SearchType {
   Show = "show",
   AudioBook = "audiobook",
   Artist = "artist",
+  Episode = "episode",
 }
 
 // 검색 요청 파라미터 인터페이스
