@@ -41,7 +41,7 @@ const SearchResultList = ({
     "success" | "error" | "info" | "warning"
   >("success"); // 스낵바 심각도
 
-  const mutation = useAddTracksToPlaylist(playlistId); // 커스텀 훅 사용
+  const mutation = useAddTracksToPlaylist(); // 커스텀 훅 사용
 
   const [ref, inView] = useInView({
     rootMargin: "200px 0px",
@@ -56,28 +56,32 @@ const SearchResultList = ({
 
   const handleAdd = (track: Track) => {
     const id = track.id ?? "";
+    if (!playlistId) return;
     if (!track.uri) return;
     setAddingTrackId(id);
 
-    mutation.mutate([track.uri], {
-      onSuccess: () => {
-        onAdded?.();
-        setSnackbarMessage(`"${track.name}"이(가) 플레이리스트에 추가되었습니다.`);
-        setSnackbarSeverity("success");
-        setSnackbarOpen(true);
-      },
-      onError: (err: unknown) => {
-        const message = err instanceof Error ? err.message : "트랙 추가에 실패했습니다.";
-        setSnackbarMessage(message);
-        setSnackbarSeverity("error");
-        setSnackbarOpen(true);
-      },
-
-      onSettled: () => {
-        setAddingTrackId(null);
-      },
-    });
+    mutation.mutate(
+      { playlistId: playlistId ?? "", uris: [track.uri] },
+      {
+        onSuccess: () => {
+          onAdded?.();
+          setSnackbarMessage(`"${track.name}"이(가) 플레이리스트에 추가되었습니다.`);
+          setSnackbarSeverity("success");
+          setSnackbarOpen(true);
+        },
+        onError: (err: unknown) => {
+          const message = err instanceof Error ? err.message : "트랙 추가에 실패했습니다.";
+          setSnackbarMessage(message);
+          setSnackbarSeverity("error");
+          setSnackbarOpen(true);
+        },
+        onSettled: () => {
+          setAddingTrackId(null);
+        },
+      }
+    );
   };
+
   const handleCloseSnackbar = () => {
     setSnackbarOpen(false);
   };
