@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 import useGetCategories from "../../hooks/useGetCategories";
 import { InputAdornment, styled, TextField, Typography } from "@mui/material";
@@ -12,6 +12,9 @@ const SearchPage = () => {
   const { data, isLoading, error } = useGetCategories({ country: "KR", limit: 12 });
   const navigate = useNavigate();
 
+  // 검색어 상태
+  const [keyword, setKeyword] = useState<string>("");
+
   // 카테고리 ID별 색상 매핑 상태
   const colorMapping = useMemo(() => {
     const map: Record<string, string> = {};
@@ -21,12 +24,27 @@ const SearchPage = () => {
     return map;
   }, [data]);
 
+  // 검색 처리 핸들러 함수
+  const handleSearch = () => {
+    const q = keyword.trim();
+    if (q.length > 0) {
+      navigate(`/search/${encodeURIComponent(q)}`);
+    }
+  };
+
   return (
     <SearchSection>
       {/* 검색어 입력 */}
       <TextArea>
         <SearchInput
-          placeholder="What do you want to contents?"
+          value={keyword}
+          onChange={(e) => setKeyword(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleSearch();
+            }
+          }}
+          placeholder="What do you feel like?"
           variant="outlined"
           fullWidth
           InputProps={{
@@ -48,7 +66,7 @@ const SearchPage = () => {
       {/* 에러 */}
       {error && <ErrorMessage message="카테고리 로드에 실패 했습니다" />}
 
-      {/* 카테고리 그리드 */}
+      {/* 카테고리 카드 */}
       <CategoryGrid>
         {data?.categories.items.map((cat) => {
           return (
