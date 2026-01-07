@@ -1,4 +1,4 @@
-import type { ExternalURLs } from "./commonType";
+import type { ExternalURLs, Followers, Image } from "./commonType";
 
 // 아티스트 타입
 export interface Artists {
@@ -8,4 +8,9 @@ export interface Artists {
   name?: string;
   type?: string;
   uri?: string;
+
+  followers?: Followers;
+  genres?: string[];
+  popularity?: number;
+  images?: Image[];
 }
