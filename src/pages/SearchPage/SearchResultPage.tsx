@@ -4,7 +4,7 @@ import { Grid, Typography, Alert, styled } from "@mui/material";
 import { SearchType } from "../../models/search";
 
 import { ApiResponse } from "../../models/apiResponse";
-import { Playlist, SimplifiedEpisode, Track } from "../../models/playList";
+import { SimplifiedEpisode, SimplifiedPlayList, Track } from "../../models/playList";
 import { Artists } from "../../models/artist";
 import { SimplifiedAlbum } from "../../models/album";
 import useSearchItemsByKeyword from "../../hooks/useSearchItemsByKeyword";
@@ -20,14 +20,14 @@ const SearchResultPage = () => {
   const [albums, setAlbums] = useState<ApiResponse<SimplifiedAlbum> | null>(null);
   const [artists, setArtists] = useState<ApiResponse<Artists> | null>(null);
   const [episodes, setEpisodes] = useState<ApiResponse<SimplifiedEpisode> | null>(null);
-  const [playlists, setPlaylists] = useState<ApiResponse<Playlist> | null>(null);
+  const [playlists, setPlaylists] = useState<ApiResponse<SimplifiedPlayList> | null>(null);
 
   const [topResult, setTopResult] = useState<
     | ApiResponse<Track>
     | ApiResponse<SimplifiedAlbum>
     | ApiResponse<Artists>
     | ApiResponse<SimplifiedEpisode>
-    | ApiResponse<Playlist>
+    | ApiResponse<SimplifiedPlayList>
     | null
   >(null);
 

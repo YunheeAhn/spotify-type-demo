@@ -3,16 +3,21 @@ import type { AddTracksToPlaylistResponse } from "../models/playList";
 import { addTracksToPlaylist } from "../apis/playListApi";
 import { PAGE_LIMIT } from "../configs/commonConfig";
 
-const useAddTracksToPlaylist = (playlistId?: string) => {
+type AddTracksVars = {
+  playlistId: string;
+  uris: string[];
+  position?: number;
+};
+
+const useAddTracksToPlaylist = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<AddTracksToPlaylistResponse, Error, string[]>({
-    mutationFn: (uris: string[]) => {
-      if (!playlistId) return Promise.reject(new Error("playlistId is not defined"));
-      return addTracksToPlaylist(playlistId, uris);
+  return useMutation<AddTracksToPlaylistResponse, Error, AddTracksVars>({
+    mutationFn: ({ playlistId, uris, position }) => {
+      return addTracksToPlaylist(playlistId, uris, position);
     },
-    onSuccess: async () => {
-      if (!playlistId) return;
+    onSuccess: async (_data, variables) => {
+      const playlistId = variables.playlistId;
 
       await queryClient.invalidateQueries({
         queryKey: ["play-list-items", { playlist_id: playlistId, limit: PAGE_LIMIT }],

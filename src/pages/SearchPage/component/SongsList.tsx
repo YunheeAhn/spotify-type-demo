@@ -8,15 +8,18 @@ interface SongListProps {
 const SongsList = ({ tracks }: SongListProps) => {
   return (
     <div className="songListContainer">
-      {tracks.map((track) => (
-        <SongListItems
-          img={track.album?.images[0]?.url}
-          name={track.album?.name}
-          artist={track.artists?.[0].name}
-          duration={track.duration_ms}
-          uri={track.uri}
-        ></SongListItems>
-      ))}
+      {tracks
+        .filter((t) => !!t.uri)
+        .map((track) => (
+          <SongListItems
+            key={track.id}
+            img={track.album?.images?.[0]?.url}
+            name={track.name}
+            artist={track.artists?.[0]?.name}
+            duration={track.duration_ms}
+            uri={track.uri!}
+          />
+        ))}
     </div>
   );
 };
