@@ -1,7 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { AddTracksToPlaylistResponse } from "../models/playList";
 import { addTracksToPlaylist } from "../apis/playListApi";
-import { PAGE_LIMIT } from "../configs/commonConfig";
 
 type AddTracksVars = {
   playlistId: string;
@@ -16,23 +15,18 @@ const useAddTracksToPlaylist = () => {
     mutationFn: ({ playlistId, uris, position }) => {
       return addTracksToPlaylist(playlistId, uris, position);
     },
-    onSuccess: async (_data, variables) => {
-      const playlistId = variables.playlistId;
+    onSuccess: async (_data, { playlistId }) => {
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: ["play-list-detail", playlistId] }),
+        queryClient.invalidateQueries({ queryKey: ["play-list-items"] }),
+        queryClient.invalidateQueries({ queryKey: ["current-user-playlists"] }),
+      ]);
 
-      await queryClient.invalidateQueries({
-        queryKey: ["play-list-items", { playlist_id: playlistId, limit: PAGE_LIMIT }],
-      });
-
-      await queryClient.invalidateQueries({
-        queryKey: ["playlist-detail", playlistId],
-      });
-
-      await queryClient.invalidateQueries({ queryKey: ["current-user-playlists"] });
-
-      await queryClient.refetchQueries({ queryKey: ["playlist-detail", playlistId] });
-      await queryClient.refetchQueries({
-        queryKey: ["play-list-items", { playlist_id: playlistId, limit: PAGE_LIMIT }],
-      });
+      await Promise.all([
+        queryClient.refetchQueries({ queryKey: ["play-list-detail", playlistId] }),
+        queryClient.refetchQueries({ queryKey: ["play-list-items"] }),
+        queryClient.refetchQueries({ queryKey: ["current-user-playlists"] }),
+      ]);
     },
   });
 };
