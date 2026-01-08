@@ -14,17 +14,15 @@ interface OtherCardProps {
 const OtherCard = ({ image, name, info }: OtherCardProps) => {
   return (
     <CardContainer>
-      <CardImage src={image ? image : defaultImage} alt={name ?? "image"} />
-
-      <PlayButtonWrapper>
+      <CardImage>
+        <img src={image ? image : defaultImage} alt={name ?? "artist"} />
         <PlayButton />
-      </PlayButtonWrapper>
+      </CardImage>
 
-      <NameTypo marginTop={"10px"} fontWeight={700} fontSize="larger">
-        {name}
-      </NameTypo>
-
-      <ArtistTypo marginTop={"10px"}>{info}</ArtistTypo>
+      <TextWrap>
+        <NameTypo>{name}</NameTypo>
+        <ArtistTypo>{info}</ArtistTypo>
+      </TextWrap>
     </CardContainer>
   );
 };
@@ -32,36 +30,51 @@ const OtherCard = ({ image, name, info }: OtherCardProps) => {
 export default OtherCard;
 
 // 스타일드 컴포넌트
-
-const CardContainer = styled("div")(() => ({
+const CardContainer = styled("dl")(() => ({
   position: "relative",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
   justifyContent: "center",
   padding: "15px",
+  cursor: "pointer",
+  transition: "all .3s ease",
+
   width: "100%",
 
-  "&:hover": {
+  "&:hover ": {
     backgroundColor: "rgba(255, 255, 255, 0.1)",
     borderRadius: 10,
   },
 
-  "&:hover .playButton": {
-    display: "block",
+  "& .play-button": {
+    opacity: 0,
+    transform: "translate(-50%, -50%) scale(.9)",
+    transition: "all .2s ease",
+    position: "absolute",
+    top: "calc(50% - 15px)",
+    left: "50%",
+  },
+  "&:hover .play-button": { opacity: 1, transform: "translate(-50%, -50%) scale(1)" },
+}));
+
+const CardImage = styled("dt")(() => ({
+  borderRadius: "10px",
+  overflow: "hidden",
+
+  "& img": {
+    borderRadius: "10px",
+    objectFit: "cover",
+    width: "100%",
+    height: "auto",
+    aspectRatio: "1 / 1",
   },
 }));
 
-const CardImage = styled("img")(({ theme }) => ({
-  width: 200,
-  height: 200,
-  borderRadius: 10,
-  objectFit: "cover",
-
-  [theme.breakpoints.down("lg")]: {
-    width: 100,
-    height: 100,
-  },
+const TextWrap = styled("dd")(() => ({
+  textAlign: "center",
+  marginTop: 10,
+  marginLeft: 0,
 }));
 
 const NameTypo = styled(Typography)(({ theme }) => ({
@@ -69,6 +82,9 @@ const NameTypo = styled(Typography)(({ theme }) => ({
   whiteSpace: "nowrap",
   overflow: "hidden",
   textOverflow: "ellipsis",
+  textAlign: "center",
+  fontWeight: 500,
+  fontSize: "1.2rem",
 
   [theme.breakpoints.down("lg")]: {
     width: 100,
@@ -84,20 +100,5 @@ const ArtistTypo = styled(Typography)(({ theme }) => ({
 
   [theme.breakpoints.down("lg")]: {
     width: 100,
-  },
-}));
-
-const PlayButtonWrapper = styled("div")(() => ({
-  position: "absolute",
-  bottom: 5,
-  right: 0,
-  transform: "translate(-50%, -50%)",
-  display: "none",
-  cursor: "pointer",
-  transition: "opacity 1s ease",
-  zIndex: 1,
-
-  ".MuiBox-root:hover &": {
-    display: "block",
   },
 }));

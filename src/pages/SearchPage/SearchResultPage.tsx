@@ -118,125 +118,124 @@ const SearchResultPage = () => {
 
   return (
     <SearchKeywordContainer>
-      <Grid container spacing={2} marginTop="24px">
+      <TopSection>
         {topResult && (
-          <Grid size={{ xs: 12, md: 6 }}>
+          <div>
             <Typography variant="h1" pb={"8px"}>
-              상위 결과
+              TOP RESULT
             </Typography>
             <TopResult topResult={topResult?.items[0]}></TopResult>
-          </Grid>
+          </div>
         )}
         {tracks && (
-          <Grid size={{ xs: 12, md: 6 }}>
+          <div>
             <Typography variant="h1" pb={"8px"}>
-              곡
+              SONGS
             </Typography>
             <SongsList tracks={tracks?.items.slice(0, 5)}></SongsList>
-          </Grid>
+          </div>
         )}
-        {artists && !artists.items.every((artist) => artist === null) && (
-          <SectionContainer>
-            <Typography variant="h1" pb={"8px"}>
-              아티스트
-            </Typography>
-            <Grid container spacing={2}>
-              {artists.items
-                .filter((item) => item !== null && item !== undefined)
-                .slice(0, 6)
-                .map((item) => (
-                  <Grid key={item.id} size={{ xs: 6, md: 2 }} display="flex">
-                    <ArtistCard
-                      image={item.images?.[0]?.url ?? defaultImage}
-                      name={item.name ?? "Unknown Artist"}
-                    />
-                  </Grid>
-                ))}
-            </Grid>
-          </SectionContainer>
-        )}
-        {albums && !albums.items.every((album) => album === null) && (
-          <SectionContainer>
-            <Typography variant="h1" pb={"8px"}>
-              앨범
-            </Typography>
-            <Grid container spacing={2}>
-              {albums.items
-                .filter((item) => item !== null && item !== undefined)
-                .slice(0, 6)
-                .map((item) => (
-                  <Grid key={item.id} size={{ xs: 6, md: 2 }} display="flex">
+      </TopSection>
+
+      {artists && !artists.items.every((artist) => artist === null) && (
+        <SectionContainer>
+          <Typography variant="h1" pb={"8px"}>
+            ARTIST
+          </Typography>
+          <CardSection>
+            {artists.items
+              .filter((item) => item !== null && item !== undefined)
+              .slice(0, 6)
+              .map((item) => (
+                <CardWrap key={item.id}>
+                  <ArtistCard
+                    image={item.images?.[0]?.url ?? defaultImage}
+                    name={item.name ?? "Unknown Artist"}
+                  />
+                </CardWrap>
+              ))}
+          </CardSection>
+        </SectionContainer>
+      )}
+      {albums && !albums.items.every((album) => album === null) && (
+        <SectionContainer>
+          <Typography variant="h1" pb={"8px"}>
+            ALBUMS
+          </Typography>
+          <CardSection>
+            {albums.items
+              .filter((item) => item !== null && item !== undefined)
+              .slice(0, 6)
+              .map((item) => (
+                <CardWrap>
+                  <OtherCard
+                    image={item.images?.[0]?.url}
+                    name={item.name}
+                    info={
+                      item.release_date
+                        ? `${moment(item.release_date).format("yyyy")} • ${item.artists[0].name}`
+                        : item.artists[0].name
+                    }
+                  />
+                </CardWrap>
+              ))}
+          </CardSection>
+        </SectionContainer>
+      )}
+      {episodes && !episodes.items.every((episode) => episode === null) && (
+        <SectionContainer>
+          <Typography variant="h1" pb={"8px"}>
+            EPISODES
+          </Typography>
+          <CardSection>
+            {episodes.items
+              .filter((item) => item !== null && item !== undefined)
+              .slice(0, 6)
+              .map((item) => (
+                <CardWrap key={item.id}>
+                  <OtherCard
+                    image={item.images?.[0]?.url}
+                    name={item.name}
+                    info={
+                      item.release_date
+                        ? `${moment(item.release_date).format("yyyy-MM")} • ${moment(
+                            item.duration_ms
+                          ).format("mm")}분`
+                        : `${moment(item.duration_ms).format("mm")}분`
+                    }
+                  />
+                </CardWrap>
+              ))}
+          </CardSection>
+        </SectionContainer>
+      )}
+      {playlists && !playlists.items.every((playlist) => playlist === null) && (
+        <SectionContainer>
+          <Typography variant="h1" pb={"8px"}>
+            PLAYLISTS
+          </Typography>
+          <CardSection>
+            {playlists.items
+              .filter((item) => item !== null && item !== undefined)
+              .slice(0, 6)
+              .map((item) =>
+                item !== null ? (
+                  <CardWrap key={item.id}>
                     <OtherCard
                       image={item.images?.[0]?.url}
                       name={item.name}
                       info={
-                        item.release_date
-                          ? `${moment(item.release_date).format("yyyy")} • ${item.artists[0].name}`
-                          : item.artists[0].name
+                        item.owner ? `만든 사람: ${item.owner.display_name}` : `만든 사람: Unknown`
                       }
                     />
-                  </Grid>
-                ))}
-            </Grid>
-          </SectionContainer>
-        )}
-        {episodes && !episodes.items.every((episode) => episode === null) && (
-          <SectionContainer>
-            <Typography variant="h1" pb={"8px"}>
-              에피소드
-            </Typography>
-            <Grid container spacing={2}>
-              {episodes.items
-                .filter((item) => item !== null && item !== undefined)
-                .slice(0, 6)
-                .map((item) => (
-                  <Grid key={item.id} size={{ xs: 6, md: 2 }} display="flex">
-                    <OtherCard
-                      image={item.images?.[0]?.url}
-                      name={item.name}
-                      info={
-                        item.release_date
-                          ? `${moment(item.release_date).format("yyyy-MM")} • ${moment(
-                              item.duration_ms
-                            ).format("mm")}분`
-                          : `${moment(item.duration_ms).format("mm")}분`
-                      }
-                    />
-                  </Grid>
-                ))}
-            </Grid>
-          </SectionContainer>
-        )}
-        {playlists && !playlists.items.every((playlist) => playlist === null) && (
-          <SectionContainer>
-            <Typography variant="h1" pb={"8px"}>
-              플레이리스트
-            </Typography>
-            <Grid container spacing={2}>
-              {playlists.items
-                .filter((item) => item !== null && item !== undefined)
-                .slice(0, 6)
-                .map((item) =>
-                  item !== null ? (
-                    <Grid key={item.id} size={{ xs: 6, md: 2 }} display="flex">
-                      <OtherCard
-                        image={item.images?.[0]?.url}
-                        name={item.name}
-                        info={
-                          item.owner
-                            ? `만든 사람: ${item.owner.display_name}`
-                            : `만든 사람: Unknown`
-                        }
-                      />
-                    </Grid>
-                  ) : (
-                    ""
-                  )
-                )}
-            </Grid>
-          </SectionContainer>
-        )}
-      </Grid>
+                  </CardWrap>
+                ) : (
+                  ""
+                )
+              )}
+          </CardSection>
+        </SectionContainer>
+      )}
     </SearchKeywordContainer>
   );
 };
@@ -264,4 +263,51 @@ const SearchKeywordContainer = styled("div")(() => ({
 
 const SectionContainer = styled("div")(() => ({
   width: "100%",
+}));
+
+const TopSection = styled("div")(({ theme }) => ({
+  width: "100%",
+  display: "flex",
+  gap: 40,
+  marginBottom: 40,
+
+  "& > div": { flex: 1 },
+
+  [theme.breakpoints.down("lg")]: {
+    flexDirection: "column",
+  },
+}));
+
+const CardSection = styled("section")(({ theme }) => ({
+  width: "100%",
+  display: "flex",
+  flexDirection: "row",
+  flexWrap: "wrap",
+  gap: "20px",
+  marginBottom: "40px",
+
+  [theme.breakpoints.down("md")]: {
+    gap: "15px",
+    marginBottom: "30px",
+  },
+  [theme.breakpoints.down("sm")]: {
+    gap: "10px",
+    marginBottom: "20px",
+  },
+}));
+
+const CardWrap = styled("div")(({ theme }) => ({
+  width: "calc((100% - 80px) / 5)",
+
+  [theme.breakpoints.down("lg")]: {
+    width: "calc((100% - 60px) / 4)",
+  },
+
+  [theme.breakpoints.down("md")]: {
+    width: "calc((100% - 30px) / 3)",
+  },
+
+  [theme.breakpoints.down("sm")]: {
+    width: "calc((100% - 10px) / 2)",
+  },
 }));

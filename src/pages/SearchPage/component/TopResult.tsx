@@ -75,9 +75,7 @@ const TopResult = ({ topResult }: TopResultProps) => {
 
   return (
     <Container>
-      <PlayButtonWrapper>
-        <PlayButton />
-      </PlayButtonWrapper>
+      <PlayButton />
 
       <ResultImage
         src={
@@ -106,27 +104,25 @@ export default TopResult;
 // 스타일드 컴포넌트
 const Container = styled("div")(() => ({
   position: "relative",
-  padding: 20,
+  padding: "20px",
+  cursor: "pointer",
+  transition: "all .3s ease",
 
   "&:hover": {
     backgroundColor: "rgba(255, 255, 255, 0.1)",
     borderRadius: 10,
   },
 
-  "&:hover .playButton": {
-    display: "block",
+  "& .play-button": {
+    opacity: 0,
+    transform: "scale(.9)",
+    transition: "all .2s ease",
+    position: "absolute",
+    bottom: "15px",
+    right: "15px",
   },
-}));
 
-const PlayButtonWrapper = styled("div")(() => ({
-  position: "absolute",
-  bottom: 20,
-  right: 15,
-  transform: "translate(-50%, -50%)",
-  display: "none",
-  cursor: "pointer",
-  transition: "opacity 1s ease",
-  zIndex: 1,
+  "&:hover .play-button": { opacity: 1, transform: "scale(1)" },
 }));
 
 const ResultImage = styled("img")<{ $isArtist: boolean }>(({ $isArtist }) => ({
