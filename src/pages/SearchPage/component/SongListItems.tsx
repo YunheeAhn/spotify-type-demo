@@ -103,7 +103,7 @@ const SongListItems = ({ img, name, artist, duration, uri }: SongListItemProps) 
         <SongItemArtist>{artist ? artist : "Unknown"}</SongItemArtist>
       </SongItemInfoContainer>
 
-      <AddSongBtnWrapper>
+      <AddSongBtnWrapper className="addSongBtnWrapper">
         <Button variant="outlined" onClick={showMiniPlaylist}>
           +
         </Button>
