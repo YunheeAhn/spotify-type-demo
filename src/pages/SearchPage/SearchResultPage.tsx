@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { Grid, Typography, Alert, styled } from "@mui/material";
+import { Typography, Alert, styled } from "@mui/material";
 import { SearchType } from "../../models/search";
 
 import { ApiResponse } from "../../models/apiResponse";
