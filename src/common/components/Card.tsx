@@ -3,6 +3,7 @@ import { styled, Typography } from "@mui/material";
 import { SimplifiedAlbum } from "../../models/album";
 import theme from "../../theme";
 import PlayButton from "./PlayButton";
+import { Track } from "../../models/playList";
 
 interface AlbumCardProps {
   album: SimplifiedAlbum;
@@ -28,6 +29,29 @@ function AlbumCard({ album }: AlbumCardProps) {
 
 export default AlbumCard;
 
+interface TrackCardProps {
+  track: Track;
+}
+
+// 트랙 카드 컴포넌트
+export function TrackCard({ track }: TrackCardProps) {
+  const artistName = track.artists?.[0]?.name ?? "Unknown Artist";
+
+  return (
+    <PlayButtonCard>
+      <CardThumbnail>
+        <img src={track.album?.images[0]?.url} alt={track.name} />
+
+        <PlayButton />
+      </CardThumbnail>
+      <CardInfo>
+        <Typography component="p">{track.name}</Typography>
+        <Typography component="p">{artistName}</Typography>
+      </CardInfo>
+    </PlayButtonCard>
+  );
+}
+
 // 카드 컴포넌트
 const PlayButtonCard = styled("dl")({
   width: "calc((100% - 100px) / 6)",
@@ -42,6 +66,11 @@ const PlayButtonCard = styled("dl")({
   [theme.breakpoints.down("lg")]: {
     width: "calc((100% - 48px) / 4)",
   },
+
+  [theme.breakpoints.down("md")]: {
+    width: "calc((100% - 32px) / 3)",
+  },
+
   [theme.breakpoints.down("sm")]: {
     width: "calc((100% - 12px) / 2)",
   },
