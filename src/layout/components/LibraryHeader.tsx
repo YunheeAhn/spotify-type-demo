@@ -43,22 +43,32 @@ const LibraryHeader = () => {
   );
 };
 
-const Head = styled("div")({
+const Head = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   paddingBottom: "8px",
-});
 
-const HeadBox = styled(Box)({
+  [theme.breakpoints.down("sm")]: {
+    padding: "10px 0",
+  },
+}));
+
+const HeadBox = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   gap: "20px",
-});
 
-const ButtonBox = styled(Box)({
+  [theme.breakpoints.down("sm")]: {},
+}));
+
+const ButtonBox = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   marginLeft: "auto",
-});
+
+  [theme.breakpoints.down("sm")]: {
+    marginLeft: "0",
+  },
+}));
 
 export default LibraryHeader;

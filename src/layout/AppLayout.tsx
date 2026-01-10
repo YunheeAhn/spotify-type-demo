@@ -8,6 +8,7 @@ import Navbar from "./components/Navbar";
 
 import { styled } from "@mui/material/styles";
 import { Box, Typography } from "@mui/material";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
 import HomeIcon from "@mui/icons-material/Home";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 
@@ -39,6 +40,30 @@ const AppLayout = () => {
         </ContentsBox>
       </Sidebar>
 
+      <MobileSidebar>
+        <NavList>
+          <NavItem to="/">
+            <HomeIcon />
+            <Typography variant="h2" fontWeight={400}>
+              Home
+            </Typography>
+          </NavItem>
+          <NavItem to="/search">
+            <SearchOutlinedIcon />
+            <Typography variant="h2" fontWeight={400}>
+              Search
+            </Typography>
+          </NavItem>
+
+          <NavItem to="/playlist">
+            <BookmarkIcon />
+            <Typography variant="h2" fontWeight={400}>
+              Your Library
+            </Typography>
+          </NavItem>
+        </NavList>
+      </MobileSidebar>
+
       {/* Main Content */}
       <MainContent>
         <Navbar />
@@ -58,6 +83,7 @@ const Layout = styled("div")(({ theme }) => ({
   overflow: "hidden",
   padding: "8px",
   boxSizing: "border-box",
+  position: "relative",
 
   [theme.breakpoints.down("sm")]: {
     padding: 0,
@@ -70,13 +96,30 @@ const Sidebar = styled("div")(({ theme }) => ({
   height: "100%",
   display: "flex",
   flexDirection: "column",
-
+  [theme.breakpoints.down("md")]: {
+    width: "220px",
+  },
   [theme.breakpoints.down("sm")]: {
     display: "none",
   },
+}));
 
-  [theme.breakpoints.down("md")]: {
-    width: "220px",
+// 모바일 사이드바(하단)
+const MobileSidebar = styled("div")(({ theme }) => ({
+  display: "none",
+
+  [theme.breakpoints.down("sm")]: {
+    position: "fixed",
+    bottom: 0,
+    zIndex: 1000,
+
+    display: "flex",
+    width: "100%",
+    height: "80px",
+    alignItems: "center",
+
+    backgroundColor: theme.palette.background.default,
+    borderTop: `1px solid ${theme.palette.divider}`,
   },
 }));
 
@@ -92,11 +135,24 @@ const ContentsBox = styled(Box)(({ theme }) => ({
 }));
 
 // 내비게이션 리스트
-const NavList = styled("ul")({
+const NavList = styled("ul")(({ theme }) => ({
   listStyle: "none",
   padding: 0,
   margin: 0,
-});
+
+  [theme.breakpoints.down("sm")]: {
+    display: " flex",
+    justifyContent: "space-around",
+    alignItems: "center",
+    gap: "10px",
+    width: "100%",
+    height: "100%",
+    padding: "0 10px",
+    boxSizing: "border-box",
+    margin: 0,
+    listStyle: "none",
+  },
+}));
 
 // 내비게이션 아이템(링크)
 const NavItem = styled(NavLink)(({ theme }) => ({
@@ -138,6 +194,32 @@ const NavItem = styled(NavLink)(({ theme }) => ({
 
   "& + &": {
     marginTop: "10px",
+  },
+
+  [theme.breakpoints.down("sm")]: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "4px",
+
+    width: "calc((100% - 20px) / 3)",
+    textDecoration: "none",
+    color: theme.palette.text.secondary,
+    fontSize: "1.1rem",
+    textAlign: "center",
+
+    "&.active, &.active:hover": {
+      color: theme.palette.primary.main,
+    },
+    "&:hover": {
+      color: theme.palette.primary,
+    },
+
+    "&:before": {
+      display: "none",
+    },
+    "& + &": {
+      marginTop: "0",
+    },
   },
 }));
 

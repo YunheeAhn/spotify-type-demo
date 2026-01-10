@@ -56,7 +56,7 @@ const CardContainer = styled("dl")(() => ({
   "&:hover .play-button": { opacity: 1, transform: "translate(-50%, -50%) scale(1)" },
 }));
 
-const CardImage = styled("dt")(() => ({
+const CardImage = styled("dt")(({ theme }) => ({
   borderRadius: "100%",
   overflow: "hidden",
 
@@ -64,6 +64,11 @@ const CardImage = styled("dt")(() => ({
     objectFit: "cover",
     width: "100%",
     height: "auto",
+  },
+
+  [theme.breakpoints.down("sm")]: {
+    width: "200px",
+    height: "200px",
   },
 }));
 

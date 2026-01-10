@@ -29,7 +29,7 @@ const Library = () => {
     if (inView && hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
     }
-  }, [inView]);
+  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   if (!user) {
     // 유저 없으면 EmptyPlayList

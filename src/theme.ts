@@ -26,10 +26,10 @@ const theme = createTheme({
     fontFamily: "Inter, Arial, sans-serif",
     h1: {
       fontWeight: 700,
-      fontSize: "24px",
+      fontSize: "2rem",
     },
     h2: {
-      fontSize: "1rem",
+      fontSize: "1.2rem",
     },
     body1: {
       fontSize: "1rem",

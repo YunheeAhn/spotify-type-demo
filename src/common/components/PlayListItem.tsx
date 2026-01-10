@@ -14,7 +14,7 @@ interface PlaylistItemProps {
   artistName: string | null;
   id: string;
   handleClick: (id: string) => void;
-  onDelete: (id: string) => void;
+  onDelete?: (id: string) => void;
   selected?: boolean;
 }
 
@@ -45,14 +45,16 @@ const PlayListItem = ({
       />
 
       {/* 삭제 버튼 */}
-      <DeleteButton
-        onClick={(e) => {
-          e.stopPropagation();
-          onDelete(id);
-        }}
-      >
-        <DeleteIcon />
-      </DeleteButton>
+      {onDelete && (
+        <DeleteButton
+          onClick={(e) => {
+            e.stopPropagation();
+            onDelete(id);
+          }}
+        >
+          <DeleteIcon />
+        </DeleteButton>
+      )}
     </PlayListItemContainer>
   );
 };
@@ -65,6 +67,9 @@ const PlayListItemContainer = styled(ListItemButton)(({ theme, selected }) => ({
   alignItems: "center",
   borderRadius: "8px",
   backgroundColor: selected ? theme.palette.action.active : "",
+  position: "relative",
+  paddingRight: "20px",
+
   "&:hover": {
     backgroundColor: theme.palette.action.hover,
   },
@@ -79,6 +84,8 @@ const PlayListItemContainer = styled(ListItemButton)(({ theme, selected }) => ({
     transform: "rotate(360deg)",
     transition: "all 6s ease",
   },
+
+  [theme.breakpoints.down("sm")]: {},
 }));
 
 const PlaylistAvatar = styled(ListItemAvatar)({
@@ -92,7 +99,7 @@ const PlaylistAvatar = styled(ListItemAvatar)({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  marginRight: "5px",
+  marginRight: "10px",
   //   transition: "all .3s ease",
 
   "& img ": {
@@ -112,6 +119,14 @@ const DeleteButton = styled(Button)(({ theme }) => ({
   color: theme.palette.text.secondary,
 
   opacity: 0.6,
+
+  padding: "0 0 0 5px",
+  minWidth: "auto",
+
+  position: "absolute",
+  top: "50%",
+  right: "-5px",
+  transform: "translateY(-50%)",
 
   "&:hover": {
     color: theme.palette.primary.main,
