@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { SimplifiedPlayList } from "../../models/playList";
 import PlayListItem from "../../common/components/PlayListItem";
@@ -17,6 +17,10 @@ const PlayList = ({ playlists }: PlaylistProps) => {
   const [selectedId, setSelectedId] = useState<string>("");
   const [list, setList] = useState<SimplifiedPlayList[]>(playlists);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setList(playlists);
+  }, [playlists]);
 
   const handleItemClick = (id: string) => {
     setSelectedId(id);
