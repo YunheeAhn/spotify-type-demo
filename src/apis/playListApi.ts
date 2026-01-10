@@ -100,3 +100,7 @@ export const addTracksToPlaylist = async (
     throw new Error("Failed to add tracks to playlist");
   }
 };
+
+export const unfollowPlaylist = async (playlist_id: string): Promise<void> => {
+  await api.delete(`/playlists/${playlist_id}/followers`);
+};

@@ -1,4 +1,12 @@
-import { ListItemAvatar, ListItemButton, ListItemText, styled, Typography } from "@mui/material";
+import {
+  Button,
+  ListItemAvatar,
+  ListItemButton,
+  ListItemText,
+  styled,
+  Typography,
+} from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 interface PlaylistItemProps {
   image: string | null;
@@ -6,6 +14,7 @@ interface PlaylistItemProps {
   artistName: string | null;
   id: string;
   handleClick: (id: string) => void;
+  onDelete: (id: string) => void;
   selected?: boolean;
 }
 
@@ -15,6 +24,7 @@ const PlayListItem = ({
   artistName,
   id,
   handleClick,
+  onDelete,
   selected,
 }: PlaylistItemProps) => {
   return (
@@ -33,6 +43,16 @@ const PlayListItem = ({
           </Typography>
         }
       />
+
+      {/* 삭제 버튼 */}
+      <DeleteButton
+        onClick={(e) => {
+          e.stopPropagation();
+          onDelete(id);
+        }}
+      >
+        <DeleteIcon />
+      </DeleteButton>
     </PlayListItemContainer>
   );
 };
@@ -86,4 +106,15 @@ const PlaylistName = styled(ListItemText)(({ theme }) => ({
   fontWeight: "bold",
   color: theme.palette.primary.main,
   width: "calc(100% - 60px)",
+}));
+
+const DeleteButton = styled(Button)(({ theme }) => ({
+  color: theme.palette.text.secondary,
+
+  opacity: 0.6,
+
+  "&:hover": {
+    color: theme.palette.primary.main,
+    opacity: 1,
+  },
 }));
